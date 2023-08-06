@@ -53,8 +53,19 @@ async def welcome(_, message):
             draw.text((profile_pic_position[0], text_y), username_text, fill="white", font=font)
             draw.text((profile_pic_position[0], text_y + font_size), user_id_text, fill="white", font=font)
             
-            # Paste the circular profile picture onto the welcome image using alpha_composite
-            welcome_with_profile_pic.alpha_composite(profile_pic, profile_pic_position)
+            # Create a circular mask for the profile picture
+            mask = Image.new("L", profile_pic.size, 0)
+            mask_draw = ImageDraw.Draw(mask)
+            mask_draw.ellipse((0, 0, profile_pic.size[0], profile_pic.size[1]), fill=255)
+            profile_pic.putalpha(mask)
+            
+            # Add an outline to the profile picture
+            outline_color = (255, 255, 255)  # White color for the outline
+            border_width = 9  # Adjust the border width as desired
+            profile_pic_with_outline = ImageOps.expand(profile_pic, border=border_width, fill=outline_color)            
+            
+            # Paste the circular profile picture onto the welcome image
+            welcome_with_profile_pic.paste(profile_pic.convert("RGB"), profile_pic_position, profile_pic) 
             
             # Save the final welcome image with a unique name based on the user's ID
             welcome_image_path = f"welcome_{user.id}.jpg"
