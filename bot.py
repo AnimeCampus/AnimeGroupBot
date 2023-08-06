@@ -46,7 +46,17 @@ async def welcome(_, message):
             # Paste the profile picture onto the welcome image
             welcome_with_profile_pic.paste(profile_pic, profile_pic_position, profile_pic) 
             
-            # Apply a circular mask to the profile picture
+            # Draw the username and user ID on the welcome image
+            draw = ImageDraw.Draw(welcome_with_profile_pic)
+            font_size = 30
+            font = ImageFont.truetype("arial.ttf", font_size)
+            username_text = f"Username: {user.username}" if user.username else ""
+            user_id_text = f"User ID: {user.id}"
+            text_y = profile_pic_position[1] + profile_pic_size[1] + 20
+            draw.text((profile_pic_position[0], text_y), username_text, fill="white", font=font)
+            draw.text((profile_pic_position[0], text_y + font_size), user_id_text, fill="white", font=font)
+            
+            # Create a circular mask for the profile picture
             mask = Image.new("L", profile_pic.size, 0)
             mask_draw = ImageDraw.Draw(mask)
             mask_draw.ellipse((0, 0, profile_pic.size[0], profile_pic.size[1]), fill=255)
@@ -59,16 +69,6 @@ async def welcome(_, message):
             
             # Paste the circular profile picture onto the welcome image
             welcome_with_profile_pic.paste(profile_pic, profile_pic_position, profile_pic) 
-            
-            # Draw the username and user ID on the welcome image
-            draw = ImageDraw.Draw(welcome_with_profile_pic)
-            font_size = 30
-            font = ImageFont.truetype("arial.ttf", font_size)
-            username_text = f"Username: {user.username}" if user.username else ""
-            user_id_text = f"User ID: {user.id}"
-            text_y = profile_pic_position[1] + profile_pic_size[1] + 20
-            draw.text((profile_pic_position[0], text_y), username_text, fill="white", font=font)
-            draw.text((profile_pic_position[0], text_y + font_size), user_id_text, fill="white", font=font)
             
             # Save the final welcome image with a unique name based on the user's ID
             welcome_image_path = f"welcome_{user.id}.jpg"
