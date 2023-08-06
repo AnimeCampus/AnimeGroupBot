@@ -101,6 +101,8 @@ Feel free to introduce yourself and share your favorite anime with us. If you ha
         except Exception as e:
             print(f"Error sending welcome message for {user.first_name}: {str(e)}")
 
+print("started")
+
 # Run the client
 app.run()
 idle()
