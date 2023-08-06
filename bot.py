@@ -14,6 +14,11 @@ bot_token = "6126511065:AAHLPF8CuwowgQm9NaYK_vR_caAD_c0tCxg"  # Replace with you
 # Create the Client object
 app = Client("welcome_bot", api_id=api_id, api_hash=api_hash, bot_token=bot_token)
 
+# Function to create a bold font
+def get_bold_font(size):
+    bold_font = ImageFont.truetype("arialbd.ttf", size)
+    return bold_font
+
 @app.on_message(filters.new_chat_members & filters.group)
 async def welcome(_, message):
     for user in message.new_chat_members:
@@ -43,11 +48,19 @@ async def welcome(_, message):
             # Paste the welcome template onto the new image
             welcome_with_profile_pic.paste(welcome_image, (0, 0))
             
+            # Draw the group name at the top with capital letters
+            group_name = message.chat.title
+            draw = ImageDraw.Draw(welcome_with_profile_pic)
+            group_name_font = get_bold_font(50)
+            group_name_width, group_name_height = draw.textsize(group_name, font=group_name_font)
+            group_name_position = ((image_width - group_name_width) // 2, 50)
+            draw.text(group_name_position, group_name, fill="white", font=group_name_font)
+            
             # Draw the username and user ID on the welcome image
             draw = ImageDraw.Draw(welcome_with_profile_pic)
             font_size = 30
             font = ImageFont.truetype("arial.ttf", font_size)
-            username_text = f"Username: {user.username}" if user.username else ""
+            username_text = f"Username: @{user.username}" if user.username else ""
             user_id_text = f"User ID: {user.id}"
             text_y = profile_pic_position[1] + profile_pic_size[1] + 20
             draw.text((profile_pic_position[0], text_y), username_text, fill="white", font=font)
