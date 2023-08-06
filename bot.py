@@ -16,8 +16,7 @@ app = Client("welcome_bot", api_id=api_id, api_hash=api_hash, bot_token=bot_toke
 
 # Function to create a bold font
 def get_bold_font(size):
-    bold_font = ImageFont.truetype("arialbd.ttf", size)
-    return bold_font
+    return ImageFont.truetype("arial.ttf", size, weight="bold")
 
 @app.on_message(filters.new_chat_members & filters.group)
 async def welcome(_, message):
@@ -49,7 +48,7 @@ async def welcome(_, message):
             welcome_with_profile_pic.paste(welcome_image, (0, 0))
             
             # Draw the group name at the top with capital letters
-            group_name = message.chat.title
+            group_name = message.chat.title.upper()
             draw = ImageDraw.Draw(welcome_with_profile_pic)
             group_name_font = get_bold_font(50)
             group_name_width, group_name_height = draw.textsize(group_name, font=group_name_font)
@@ -60,7 +59,7 @@ async def welcome(_, message):
             draw = ImageDraw.Draw(welcome_with_profile_pic)
             font_size = 30
             font = ImageFont.truetype("arial.ttf", font_size)
-            username_text = f"Username: @{user.username}" if user.username else ""
+            username_text = f"Username: {user.username}" if user.username else ""
             user_id_text = f"User ID: {user.id}"
             text_y = profile_pic_position[1] + profile_pic_size[1] + 20
             draw.text((profile_pic_position[0], text_y), username_text, fill="white", font=font)
