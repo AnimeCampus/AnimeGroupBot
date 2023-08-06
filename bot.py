@@ -55,7 +55,16 @@ async def welcome(_, message):
             profile_pic_position = (150, (image_height - profile_pic.height) // 2 + 140)
             
             # Paste the circular profile picture onto the welcome image
-            welcome_with_profile_pic.paste(profile_pic, profile_pic_position, profile_pic)                                  
+            welcome_with_profile_pic.paste(profile_pic, profile_pic_position, profile_pic)
+            
+            # Draw the username and user ID on the welcome image
+            draw = ImageDraw.Draw(welcome_with_profile_pic)
+            font_size = 30
+            font = ImageFont.truetype("arial.ttf", font_size)
+            username_text = f"Username: {user.username}" if user.username else ""
+            user_id_text = f"User ID: {user.id}"
+            draw.text((profile_pic_position[0], profile_pic_position[1] + profile_pic.height + 10), username_text, fill="white", font=font)
+            draw.text((profile_pic_position[0], profile_pic_position[1] + profile_pic.height + 10 + font_size), user_id_text, fill="white", font=font)
             
             # Save the final welcome image with a unique name based on the user's ID
             welcome_image_path = f"welcome_{user.id}.jpg"
