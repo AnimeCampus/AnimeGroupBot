@@ -16,7 +16,7 @@ app = Client("welcome_bot", api_id=api_id, api_hash=api_hash, bot_token=bot_toke
 
 # Function to create a bold font
 def get_bold_font(size):
-    return ImageFont.truetype("arial.ttf", size)
+    return ImageFont.truetype("arialbd.ttf", size)
 
 @app.on_message(filters.new_chat_members & filters.group)
 async def welcome(_, message):
@@ -79,4 +79,28 @@ async def welcome(_, message):
             # Paste the circular profile picture onto the welcome image
             welcome_with_profile_pic.paste(profile_pic.convert("RGB"), profile_pic_position, profile_pic) 
             
-            # Save the final welcome image with a unique name based
+            # Save the final welcome image with a unique name based on the user's ID
+            welcome_image_path = f"welcome_{user.id}.jpg"
+            welcome_with_profile_pic.save(welcome_image_path)
+            
+            # Specify the welcome message
+            msg = f"""
+**Hey! {user.mention}**, Welcome to {message.chat.title}! 🎉🎊
+
+My Sharingan is always watching you! 👁️‍🗨️
+
+Feel free to introduce yourself and share your favorite anime with us. If you have any questions or need assistance, don't hesitate to ask. Enjoy your stay and have fun discussing anime with fellow enthusiasts! 😊🎮📺
+"""
+            
+            # Reply to the message with the custom welcome image and caption
+            await message.reply_photo(photo=welcome_image_path, caption=msg, reply_markup=markup)
+            
+            # Remove the temporary welcome image file
+            welcome_with_profile_pic.close()
+            os.remove(welcome_image_path)
+        except Exception as e:
+            print(f"Error sending welcome message for {user.first_name}: {str(e)}")
+
+# Run the client
+app.run()
+idle()
