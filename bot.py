@@ -16,7 +16,7 @@ app = Client("welcome_bot", api_id=api_id, api_hash=api_hash, bot_token=bot_toke
 
 # Function to create a bold font
 def get_bold_font(size):
-    return ImageFont.truetype("arialbd.ttf", size)
+    return ImageFont.truetype("Big Space.otf", size)
 
 @app.on_message(filters.new_chat_members & filters.group)
 async def welcome(_, message):
@@ -30,7 +30,7 @@ async def welcome(_, message):
             image_height = 720
             
             # Load the custom welcome template image
-            welcome_image = Image.open("madara uchiha.jpg")
+            welcome_image = Image.open("Team7.jpg")
             welcome_image = welcome_image.resize((image_width, image_height))
             
             # Load and resize the new user's profile picture
