@@ -57,10 +57,10 @@ async def welcome(_, message):
             
             # Draw the user first name on the welcome image
             draw = ImageDraw.Draw(welcome_with_profile_pic)
-            font_size = 40
+            font_size = 50
             font = ImageFont.truetype("Big Space.otf", font_size)          
             # Draw the user's first name in the welcome message
-            user_first_name = f"First Name: {user.first_name}"
+            user_first_name = f"Name: {user.first_name}"
             text_y = profile_pic_position[1] + profile_pic_size[1] + 10
             draw.text((profile_pic_position[0], text_y + 1 * font_size), user_first_name, fill="black", font=font)
             
@@ -117,6 +117,14 @@ async def goodbye(_, message):
         profile_pic_size = (350, 350)
         profile_pic_position = ((image_width - profile_pic_size[0]) // 2, (image_height - profile_pic_size[1]) // 2)
         
+        # Draw the group name at the top with capital letters
+        group_name = message.chat.title.upper()
+        draw = ImageDraw.Draw(welcome_with_profile_pic)
+        group_name_font = get_bold_font(50)
+        group_name_width, group_name_height = draw.textsize(group_name, font=group_name_font)
+        group_name_position = ((image_width - group_name_width) // 2, 50)
+        draw.text(group_name_position, group_name, fill="black", font=group_name_font)
+       
         # Load and resize the user's profile picture
         profile_pic_url = user.photo.big_file_id
         response = await app.download_media(profile_pic_url)
