@@ -35,7 +35,7 @@ async def welcome(_, message):
             
             # Load and resize the new user's profile picture
             profile_pic = Image.open(response)
-            profile_pic_size = (300, 300)
+            profile_pic_size = (350, 350)
             profile_pic.thumbnail(profile_pic_size)
             
             # Create a new blank image for the combined welcome image
@@ -55,12 +55,12 @@ async def welcome(_, message):
             group_name_position = ((image_width - group_name_width) // 2, 50)
             draw.text(group_name_position, group_name, fill="black", font=group_name_font)
             
-            # Draw the username and user ID on the welcome image
+            # Draw the user first name on the welcome image
             draw = ImageDraw.Draw(welcome_with_profile_pic)
-            font_size = 30
+            font_size = 40
             font = ImageFont.truetype("Big Space.otf", font_size)          
             # Draw the user's first name in the welcome message
-            user_first_name = f"-> First Name: {user.first_name}"
+            user_first_name = f"First Name: {user.first_name}"
             text_y = profile_pic_position[1] + profile_pic_size[1] + 20
             draw.text((profile_pic_position[0], text_y + 2 * font_size), user_first_name, fill="black", font=font)
             
@@ -114,7 +114,7 @@ async def goodbye(_, message):
         goodbye_with_user = Image.new("RGB", (image_width, image_height), (0, 0, 0))
         
         # Calculate the position of the user's profile picture in the center of the goodbye image
-        profile_pic_size = (400, 400)
+        profile_pic_size = (350, 350)
         profile_pic_position = ((image_width - profile_pic_size[0]) // 2, (image_height - profile_pic_size[1]) // 2)
         
         # Load and resize the user's profile picture
