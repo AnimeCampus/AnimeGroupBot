@@ -59,14 +59,14 @@ async def welcome(_, message):
             draw = ImageDraw.Draw(welcome_with_profile_pic)
             font_size = 30
             font = ImageFont.truetype("arial.ttf", font_size)
-            username_text = f"Username: {user.username}" if user.username else ""
-            user_id_text = f"User ID: {user.id}"
+            username_text = f"-> Username: {user.username}" if user.username else ""
+            user_id_text = f"-> User ID: {user.id}"
             text_y = profile_pic_position[1] + profile_pic_size[1] + 20
             draw.text((profile_pic_position[0], text_y), username_text, fill="white", font=font)
             draw.text((profile_pic_position[0], text_y + font_size), user_id_text, fill="white", font=font)
 
             # Draw the user's first name in the welcome message
-            user_first_name = f"First Name: {user.first_name}"
+            user_first_name = f"-> First Name: {user.first_name}"
             draw.text((profile_pic_position[0], text_y + 2 * font_size), user_first_name, fill="white", font=font)
             
             # Create a circular mask for the profile picture
