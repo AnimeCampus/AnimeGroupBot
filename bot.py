@@ -55,14 +55,14 @@ async def welcome(_, message):
             group_name_position = ((image_width - group_name_width) // 2, 50)
             draw.text(group_name_position, group_name, fill="black", font=group_name_font)
             
-            # Draw the user first name on the welcome image
+            # Draw the username on the welcome image
             draw = ImageDraw.Draw(welcome_with_profile_pic)
-            font_size = 50
-            font = ImageFont.truetype("Big Space.otf", font_size)          
-            # Draw the user's first name in the welcome message
-            user_first_name = f"Name: {user.first_name}"
-            text_y = profile_pic_position[1] + profile_pic_size[1] + 7
-            draw.text((profile_pic_position[0], text_y + 1 * font_size), user_first_name, fill="black", font=font)
+            font_size = 30
+            font = ImageFont.truetype("Big Space.otf", font_size)
+            username_text = f"Name, {user.first_name}!"
+            text_width, text_height = draw.textsize(username_text, font=font)
+            text_position = ((image_width - text_width) // 2, profile_pic_position[1] + profile_pic_size[1] + 20)
+            draw.text(text_position, username_text, fill="black", font=font)
             
             # Create a circular mask for the profile picture
             mask = Image.new("L", profile_pic.size, 0)
