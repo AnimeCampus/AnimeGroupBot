@@ -132,7 +132,7 @@ async def goodbye(_, message):
         username_text = f"Goodbye, {user.first_name}!"
         text_width, text_height = draw.textsize(username_text, font=font)
         text_position = ((image_width - text_width) // 2, profile_pic_position[1] + profile_pic_size[1] + 20)
-        draw.text(text_position, username_text, fill="white", font=font)
+        draw.text(text_position, username_text, fill="black", font=font)
         
         # Create a circular mask for the profile picture
         mask = Image.new("L", profile_pic.size, 0)
@@ -159,7 +159,7 @@ async def goodbye(_, message):
     except Exception as e:
         print(f"Error sending goodbye message for {user.first_name}: {str(e)}")
 
-
+print("Started") 
 # Run the client
 app.run()
 idle()
