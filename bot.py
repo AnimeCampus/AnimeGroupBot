@@ -6,7 +6,7 @@ from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 # Your bot credentials and access tokens
 api_id = 16743442  # Replace with your API ID
 api_hash = "12bbd720f4097ba7713c5e40a11dfd2a"  # Replace with your API hash
-bot_token = "6126511065:AAHLPF8CuwowgQm9NaYK_vR_caAD_c0tCxg"  # Replace with your bot token
+bot_token = "6330964987:AAGGGM2iz-2hTmZLkiigTQgTCHMPePRC6AY"  # Replace with your bot token
 
 # Create the Client object
 app = Client("welcome_bot", api_id=api_id, api_hash=api_hash, bot_token=bot_token)
@@ -54,7 +54,7 @@ async def welcome(_, message):
             
             # Draw the username on the welcome image
             draw = ImageDraw.Draw(welcome_with_profile_pic)
-            font_size = 30
+            font_size = 40
             font = ImageFont.truetype("Big Space.otf", font_size)
             username_text = f"Name: {user.first_name}!"
             text_width, text_height = draw.textsize(username_text, font=font)
@@ -131,7 +131,7 @@ async def goodbye(_, message):
         
         # Draw the username on the goodbye image
         draw = ImageDraw.Draw(goodbye_with_user)
-        font_size = 30
+        font_size = 40
         font = ImageFont.truetype("Big Space.otf", font_size)
         username_text = f"Goodbye, {user.first_name}!"
         text_width, text_height = draw.textsize(username_text, font=font)
