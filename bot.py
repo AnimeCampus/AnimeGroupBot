@@ -16,7 +16,7 @@ app = Client("welcome_bot", api_id=api_id, api_hash=api_hash, bot_token=bot_toke
 
 # Function to create a bold font
 def get_bold_font(size):
-    return ImageFont.truetype("arial.ttf", size)
+    return ImageFont.truetype("arialbd.ttf", size)
 
 @app.on_message(filters.new_chat_members & filters.group)
 async def welcome(_, message):
@@ -30,19 +30,19 @@ async def welcome(_, message):
             image_height = 720
             
             # Load the custom welcome template image
-            welcome_image = Image.open("Team7.jpg")
+            welcome_image = Image.open("madara uchiha.jpg")
             welcome_image = welcome_image.resize((image_width, image_height))
             
             # Load and resize the new user's profile picture
             profile_pic = Image.open(response)
-            profile_pic_size = (400, 400)
+            profile_pic_size = (200, 200)
             profile_pic.thumbnail(profile_pic_size)
             
             # Create a new blank image for the combined welcome image
             welcome_with_profile_pic = Image.new("RGB", (image_width, image_height), (0, 0, 0))
             
-            # Calculate the position of the profile picture in the center of the welcome image
-            profile_pic_position = ((image_width - profile_pic.size[0]) // 2, (image_height - profile_pic.size[1]) // 2)
+            # Calculate the position of the profile picture on the left side
+            profile_pic_position = (100, (image_height - profile_pic.size[1]) // 2)
             
             # Paste the welcome template onto the new image
             welcome_with_profile_pic.paste(welcome_image, (0, 0))
@@ -62,8 +62,8 @@ async def welcome(_, message):
             username_text = f"Username: {user.username}" if user.username else ""
             user_id_text = f"User ID: {user.id}"
             text_y = profile_pic_position[1] + profile_pic_size[1] + 20
-            draw.text((profile_pic_position[0], text_y), username_text, fill="white", font=font)
-            draw.text((profile_pic_position[0], text_y + font_size), user_id_text, fill="white", font=font)
+            draw.text((profile_pic_position[0] + profile_pic_size[0] + 20, text_y), username_text, fill="white", font=font)
+            draw.text((profile_pic_position[0] + profile_pic_size[0] + 20, text_y + font_size), user_id_text, fill="white", font=font)
             
             # Create a circular mask for the profile picture
             mask = Image.new("L", profile_pic.size, 0)
@@ -101,6 +101,8 @@ Feel free to introduce yourself and share your favorite anime with us. If you ha
         except Exception as e:
             print(f"Error sending welcome message for {user.first_name}: {str(e)}")
 
+
+print("started")
 # Run the client
 app.run()
 idle()
