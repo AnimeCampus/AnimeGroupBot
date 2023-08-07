@@ -3,9 +3,6 @@ from pyrogram import Client, filters, idle
 from PIL import Image, ImageDraw, ImageOps, ImageFont
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
-# Add any button you want below your welcome image
-markup = InlineKeyboardMarkup([[InlineKeyboardButton("Sᴜᴘᴘᴏʀᴛ", url="https://t.me/JHBots")]])
-
 # Your bot credentials and access tokens
 api_id = 16743442  # Replace with your API ID
 api_hash = "12bbd720f4097ba7713c5e40a11dfd2a"  # Replace with your API hash
@@ -59,7 +56,7 @@ async def welcome(_, message):
             draw = ImageDraw.Draw(welcome_with_profile_pic)
             font_size = 30
             font = ImageFont.truetype("Big Space.otf", font_size)
-            username_text = f"Name, {user.first_name}!"
+            username_text = f"Name: {user.first_name}!"
             text_width, text_height = draw.textsize(username_text, font=font)
             text_position = ((image_width - text_width) // 2, profile_pic_position[1] + profile_pic_size[1] + 20)
             draw.text(text_position, username_text, fill="black", font=font)
@@ -85,12 +82,10 @@ async def welcome(_, message):
             # Specify the welcome message
             msg = f"""
 **Hey! {user.mention}**, Welcome to {message.chat.title}! 🎉🎊
-
-My Sharingan is always watching you! 👁️‍🗨️
 """
             
             # Reply to the message with the custom welcome image and caption
-            await message.reply_photo(photo=welcome_image_path, caption=msg, reply_markup=markup)
+            await message.reply_photo(photo=welcome_image_path, caption=msg)
             
             # Remove the temporary welcome image file
             welcome_with_profile_pic.close()
@@ -160,7 +155,7 @@ async def goodbye(_, message):
         caption = f"Goodbye, {user.first_name}! We'll miss you. 👋"
         
         # Send the goodbye image as a reply to the message with the caption
-        await message.reply_photo(photo=goodbye_image_path, caption=caption, reply_markup=markup)
+        await message.reply_photo(photo=goodbye_image_path, caption=caption)
         
         # Remove the temporary goodbye image file
         goodbye_with_user.close()
