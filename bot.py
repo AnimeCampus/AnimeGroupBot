@@ -58,9 +58,10 @@ async def welcome(_, message):
             # Draw the username and user ID on the welcome image
             draw = ImageDraw.Draw(welcome_with_profile_pic)
             font_size = 30
-            font = ImageFont.truetype("arial.ttf", font_size)          
+            font = ImageFont.truetype("Big Space.otf", font_size)          
             # Draw the user's first name in the welcome message
             user_first_name = f"-> First Name: {user.first_name}"
+            text_y = profile_pic_position[1] + profile_pic_size[1] + 20
             draw.text((profile_pic_position[0], text_y + 2 * font_size), user_first_name, fill="black", font=font)
             
             # Create a circular mask for the profile picture
@@ -128,7 +129,7 @@ async def goodbye(_, message):
         # Draw the username on the goodbye image
         draw = ImageDraw.Draw(goodbye_with_user)
         font_size = 30
-        font = ImageFont.truetype("arial.ttf", font_size)
+        font = ImageFont.truetype("Big Space.otf", font_size)
         username_text = f"Goodbye, {user.first_name}!"
         text_width, text_height = draw.textsize(username_text, font=font)
         text_position = ((image_width - text_width) // 2, profile_pic_position[1] + profile_pic_size[1] + 20)
