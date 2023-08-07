@@ -154,9 +154,12 @@ async def goodbye(_, message):
         # Save the final goodbye image with a unique name based on the user's ID
         goodbye_image_path = f"goodbye_{user.id}.jpg"
         goodbye_with_user.save(goodbye_image_path)
-        
+        # Specify the welcome message
+          bye = f"""
+**Byee! {user.mention}**
+"""
         # Send the goodbye image as a reply to the message
-        await message.reply_photo(photo=goodbye_image_path, reply_markup=markup)
+        await message.reply_photo(photo=goodbye_image_path, caption=bye, reply_markup=markup)
         
         # Remove the temporary goodbye image file
         goodbye_with_user.close()
