@@ -136,8 +136,8 @@ async def goodbye(_, message):
         # Draw the username on the goodbye image
         draw = ImageDraw.Draw(goodbye_with_user)
         font_size = 30
-        font = ImageFont.truetype("Big Space.otf", font_size)
-        username_text = f"-> Goodbye, {user.first_name}!"
+        font = ImageFont.truetype("arial.ttf", font_size)
+        username_text = f"Goodbye, {user.first_name}!"
         text_width, text_height = draw.textsize(username_text, font=font)
         text_position = ((image_width - text_width) // 2, profile_pic_position[1] + profile_pic_size[1] + 20)
         draw.text(text_position, username_text, fill="white", font=font)
@@ -154,12 +154,12 @@ async def goodbye(_, message):
         # Save the final goodbye image with a unique name based on the user's ID
         goodbye_image_path = f"goodbye_{user.id}.jpg"
         goodbye_with_user.save(goodbye_image_path)
-        # Specify the welcome message
-          bye = f"""
-**Byee! {user.mention}**
-"""
-        # Send the goodbye image as a reply to the message
-        await message.reply_photo(photo=goodbye_image_path, caption=bye, reply_markup=markup)
+        
+        # Specify the goodbye message caption
+        caption = f"Goodbye, {user.first_name}! We'll miss you. 👋"
+        
+        # Send the goodbye image as a reply to the message with the caption
+        await message.reply_photo(photo=goodbye_image_path, caption=caption, reply_markup=markup)
         
         # Remove the temporary goodbye image file
         goodbye_with_user.close()
