@@ -35,7 +35,7 @@ async def welcome(_, message):
             
             # Load and resize the new user's profile picture
             profile_pic = Image.open(response)
-            profile_pic_size = (400, 400)
+            profile_pic_size = (300, 300)
             profile_pic.thumbnail(profile_pic_size)
             
             # Create a new blank image for the combined welcome image
@@ -53,21 +53,15 @@ async def welcome(_, message):
             group_name_font = get_bold_font(50)
             group_name_width, group_name_height = draw.textsize(group_name, font=group_name_font)
             group_name_position = ((image_width - group_name_width) // 2, 50)
-            draw.text(group_name_position, group_name, fill="white", font=group_name_font)
+            draw.text(group_name_position, group_name, fill="black", font=group_name_font)
             
             # Draw the username and user ID on the welcome image
             draw = ImageDraw.Draw(welcome_with_profile_pic)
             font_size = 30
-            font = ImageFont.truetype("arial.ttf", font_size)
-            username_text = f"-> Username: {user.username}" if user.username else ""
-            user_id_text = f"-> User ID: {user.id}"
-            text_y = profile_pic_position[1] + profile_pic_size[1] + 20
-            draw.text((profile_pic_position[0], text_y), username_text, fill="white", font=font)
-            draw.text((profile_pic_position[0], text_y + font_size), user_id_text, fill="white", font=font)
-
+            font = ImageFont.truetype("arial.ttf", font_size)          
             # Draw the user's first name in the welcome message
             user_first_name = f"-> First Name: {user.first_name}"
-            draw.text((profile_pic_position[0], text_y + 2 * font_size), user_first_name, fill="white", font=font)
+            draw.text((profile_pic_position[0], text_y + 2 * font_size), user_first_name, fill="black", font=font)
             
             # Create a circular mask for the profile picture
             mask = Image.new("L", profile_pic.size, 0)
