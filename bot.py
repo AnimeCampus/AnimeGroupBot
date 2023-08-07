@@ -105,6 +105,66 @@ Feel free to introduce yourself and share your favorite anime with us. If you ha
         except Exception as e:
             print(f"Error sending welcome message for {user.first_name}: {str(e)}")
 
+@app.on_message(filters.left_chat_member & filters.group)
+async def goodbye(_, message):
+    user = message.left_chat_member
+    try:
+        # Modify the dimensions and appearance of the goodbye image as desired
+        image_width = 1280
+        image_height = 720
+        
+        # Load the custom goodbye template image
+        goodbye_image = Image.open("Team7.jpg")
+        goodbye_image = goodbye_image.resize((image_width, image_height))
+        
+        # Create a new blank image for the combined goodbye image
+        goodbye_with_user = Image.new("RGB", (image_width, image_height), (0, 0, 0))
+        
+        # Calculate the position of the user's profile picture in the center of the goodbye image
+        profile_pic_size = (400, 400)
+        profile_pic_position = ((image_width - profile_pic_size[0]) // 2, (image_height - profile_pic_size[1]) // 2)
+        
+        # Load and resize the user's profile picture
+        profile_pic_url = user.photo.big_file_id
+        response = await app.download_media(profile_pic_url)
+        profile_pic = Image.open(response)
+        profile_pic.thumbnail(profile_pic_size)
+        
+        # Paste the goodbye template onto the new image
+        goodbye_with_user.paste(goodbye_image, (0, 0))
+        
+        # Draw the username on the goodbye image
+        draw = ImageDraw.Draw(goodbye_with_user)
+        font_size = 30
+        font = ImageFont.truetype("Big Space.otf", font_size)
+        username_text = f"-> Goodbye, {user.first_name}!"
+        text_width, text_height = draw.textsize(username_text, font=font)
+        text_position = ((image_width - text_width) // 2, profile_pic_position[1] + profile_pic_size[1] + 20)
+        draw.text(text_position, username_text, fill="white", font=font)
+        
+        # Create a circular mask for the profile picture
+        mask = Image.new("L", profile_pic.size, 0)
+        mask_draw = ImageDraw.Draw(mask)
+        mask_draw.ellipse((0, 0, profile_pic.size[0], profile_pic.size[1]), fill=255)
+        profile_pic.putalpha(mask)
+        
+        # Paste the circular profile picture onto the goodbye image
+        goodbye_with_user.paste(profile_pic.convert("RGB"), profile_pic_position, profile_pic) 
+        
+        # Save the final goodbye image with a unique name based on the user's ID
+        goodbye_image_path = f"goodbye_{user.id}.jpg"
+        goodbye_with_user.save(goodbye_image_path)
+        
+        # Send the goodbye image as a reply to the message
+        await message.reply_photo(photo=goodbye_image_path, reply_markup=markup)
+        
+        # Remove the temporary goodbye image file
+        goodbye_with_user.close()
+        os.remove(goodbye_image_path)
+    except Exception as e:
+        print(f"Error sending goodbye message for {user.first_name}: {str(e)}")
+
+
 # Run the client
 app.run()
 idle()
