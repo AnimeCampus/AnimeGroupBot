@@ -61,7 +61,7 @@ async def welcome(_, message):
             font = ImageFont.truetype("Big Space.otf", font_size)          
             # Draw the user's first name in the welcome message
             user_first_name = f"Name: {user.first_name}"
-            text_y = profile_pic_position[1] + profile_pic_size[1] + 10
+            text_y = profile_pic_position[1] + profile_pic_size[1] + 7
             draw.text((profile_pic_position[0], text_y + 1 * font_size), user_first_name, fill="black", font=font)
             
             # Create a circular mask for the profile picture
@@ -119,7 +119,7 @@ async def goodbye(_, message):
         
         # Draw the group name at the top with capital letters
         group_name = message.chat.title.upper()
-        draw = ImageDraw.Draw(welcome_with_profile_pic)
+        draw = ImageDraw.Draw(goodbye_image)
         group_name_font = get_bold_font(50)
         group_name_width, group_name_height = draw.textsize(group_name, font=group_name_font)
         group_name_position = ((image_width - group_name_width) // 2, 50)
