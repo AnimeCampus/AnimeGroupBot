@@ -16,7 +16,7 @@ app = Client("welcome_bot", api_id=api_id, api_hash=api_hash, bot_token=bot_toke
 
 # Function to create a bold font
 def get_bold_font(size):
-    return ImageFont.truetype("arialbd.ttf", size)
+    return ImageFont.truetype("arial.ttf", size)
 
 @app.on_message(filters.new_chat_members & filters.group)
 async def welcome(_, message):
